@@ -1,49 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoPres Polinema</title>
+    <title>GoPres Polinema - Login</title>
     <link rel="stylesheet" href="styleLogin.css">
 </head>
 <body>
     <div class="container">
-        <img class="background-image" src="assets/backgroundImage.jpg" />
-        <div class="overlay"></div>
-        <div class="welcome-text">
-            Selamat datang di <br/>GoPres Polinema!
-        </div>
-        <div class="subtitle">
-            Pusat Prestasi Mahasiswa
-        </div>
-        <div class="department">
-            Jurusan Teknologi Informasi
-        </div>
-        <img class="logo" src="assets/logoPoltek.jpg" />
-        
-        <!-- Input box for email with icon -->
-        <div class="input-box first">
-            <div class="icon">
-                <img src="assets/Profile.jpg" alt="user-icon">
+        <!-- Left Side -->
+        <div class="left-side">
+            <div class="welcome-header">
+                <h1>Selamat datang Di<br>GoPres Polinema!</h1>
+                <img src="asset/logoGopres.jpg" alt="Star Logo" class="star-logo">
             </div>
-            <input type="text" placeholder="Email" class="input-field">
+            <img src="asset/backgroundImage.jpg" alt="Welcome Illustration" class="welcome-image">
         </div>
-        
-        <!-- Input box for password with icon -->
-        <div class="input-box second">
-            <div class="icon">
-                <img src="assets/Key.jpg" alt="key-icon">
-            </div>
-            <input type="password" placeholder="Password" class="input-field">
-        </div>
-        
-        <!-- Login button with icon -->
-        <div class="button login-button">
-            <div class="button-text">Login</div>
-            <div class="icon login-icon">
-                <img src="assets/Login.jpg" alt="login-icon">
+
+        <!-- Right Side -->
+        <div class="right-side">
+            <div class="login-container">
+                <img src="asset/logoPoltek.jpg" alt="Polinema Logo" class="logo">
+                <h2 class="title">Pusat Prestasi Mahasiswa</h2>
+                <p class="subtitle">Jurusan Teknologi Informasi</p>
+                
+                <!-- Login Form -->
+                <form id="loginForm" onsubmit="return handleLogin(event)">
+                    <div class="input-group">
+                        <div class="input-icon">
+                            <img src="asset/Profile.jpg" alt="Username Icon" class="icon">
+                            <input type="text" id="username" placeholder="Username" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-icon">
+                            <img src="asset/Key.jpg" alt="Password Icon" class="icon">
+                            <input type="password" id="password" placeholder="Password" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="login-btn">Login</button>
+                </form>
             </div>
         </div>
     </div>
+
+    <!-- JavaScript file -->
+    <script src="script.js"></script>
 </body>
 </html>
