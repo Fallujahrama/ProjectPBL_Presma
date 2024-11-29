@@ -1,6 +1,7 @@
 body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    background-color: aliceblue;
+    background-color: rgb(58, 201, 87);
+    background-image: url(asset/backgroundImage.jpg);
 }
 
 .logs {
@@ -39,7 +40,7 @@ button {
 }
 
 button:hover {
-    background-color: blueviolet;
+    background-color: rgb(43, 226, 76);
 }
 
 #pesan {
