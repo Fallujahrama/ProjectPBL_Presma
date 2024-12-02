@@ -7,17 +7,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     var_dump($_POST);
     $username = trim($_POST["username"]);
     $password = trim($_POST["password"]);
-    
-    // Debugging: Tampilkan nilai username dan password
-    var_dump($username, $password); // Tempatkan di sini untuk debug
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         var_dump($_POST);
         $username = trim($_POST["username"]);
         $password = trim($_POST["password"]);
-        
-        // Debugging: Tampilkan nilai username dan password
-        var_dump($username, $password); // Tempatkan di sini untuk debug
     
         if (!empty($username) && !empty($password)) {
             // Query untuk memeriksa keberadaan username dan password di database

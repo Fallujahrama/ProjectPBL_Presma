@@ -1,7 +1,6 @@
 body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     background-color: rgb(58, 201, 87);
-    background-image: url(asset/backgroundImage.jpg);
 }
 
 .logs {

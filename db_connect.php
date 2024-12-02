@@ -14,6 +14,6 @@ if ($conn === false) {
     }
     die("Koneksi gagal. Silakan cek konfigurasi database.");
 } else {
-    echo "Koneksi berhasil!";
+    // echo "Koneksi berhasil!";
 }
 ?>
