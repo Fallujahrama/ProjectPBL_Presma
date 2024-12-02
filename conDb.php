@@ -1,28 +1,40 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "nyoba";
+$host = 'AQUEENA-IMUT\\AQUEENA';
+$username = ''; //'sa';
+$password = '';
+$database = 'prestasi_mahasiswa';
+$db;
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+try {
+  // Format koneksi PDO untuk SQL Server
+  $dsn = "sqlsrv:Server=$host;Database=$database";
 
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+  // Membuat koneksi PDO
+  $db = new PDO($dsn, $username, $password);
+
+  // Mengatur mode error menjadi exception
+  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+  echo "Koneksi Berhasil";
+} catch (PDOException $e) {
+  // Tampilkan pesan error jika koneksi gagal
+  die("Koneksi gagal: " . $e->getMessage());
 }
 
-$conn->set_charset("utf8mb4");
-
-// $username = "admin";
-// $password = password_hash("admin", PASSWORD_DEFAULT);
-
-// $sql = "INSERT INTO akun (username, password) VALUES (?, ?)";
-// $stmt = $conn->prepare($sql);
-// $stmt->bind_param("ss", $username, $password);
-// $stmt->execute();
-
-// echo "Data berhasil disimpan";
-// // $stmt->close();
-// // $conn->close();
+// $credential = [
+//     'Database' => $database,
+//     'UID' => $username,
+//     'PWD' => $password
+// ];
+// try {
+//     $db = sqlsrv_connect($host, $credential);
+//     if (!$db) {
+//         $msg = sqlsrv_errors();
+//         die($msg[0]['message']);
+//     }else{
+//         echo "Koneksi Berhasil";
+//     }
+// } catch (Exception $e) {
+//     die($e->getMessage());
+// }
 ?>

@@ -2,8 +2,8 @@
 session_start();
 
 // Check if user is logged in and has supadmin role
-if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'mahasiswa') {
-    header("Location: index.php");
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'Mahasiswa') {
+    header("Location: loginPage.php");
     exit();
 }
 ?>

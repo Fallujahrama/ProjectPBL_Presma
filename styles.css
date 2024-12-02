@@ -52,3 +52,87 @@ button:hover {
     transition: top 0.5s, opacity 0.5s;
     text-align: center;
 }
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+}
+
+header {
+    background: #333;
+    color: #fff;
+    padding: 10px 0;
+}
+
+h1 {
+    margin: 0;
+    padding: 0 20px;
+}
+
+.sidebar {
+    float: left;
+    width: 20%;
+}
+
+.actions {
+    float: right;
+    padding: 10px 20px;
+}
+
+.status-box, .info-box, .prestasi-box {
+    background: #fff;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.status-item {
+    display: inline-block;
+    width: 30%;
+    text-align: center;
+}
+
+.status-item.verified {
+    color: green;
+}
+
+.status-item.in-progress {
+    color: orange;
+}
+
+.status-item.failed {
+    color: red;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.competition-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.competition-card img {
+    max-width: 100%;
+    height: auto;
+}
