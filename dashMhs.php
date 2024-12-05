@@ -23,7 +23,10 @@ $mahasiswa = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 $namaMahasiswa = $mahasiswa ? $mahasiswa['nama_mhs'] : 'Nama tidak ditemukan';
 
 // Prepare and execute the query to get the list of competitions from the view
-$sql = "SELECT NamaMahasiswa, Judul, Deskripsi, Tingkat, Peringkat FROM v_list_kompetisi";
+// $sql = "SELECT NamaMahasiswa, Judul, Deskripsi, Tingkat, Peringkat FROM v_list_kompetisi";
+// $stmt = sqlsrv_query($conn, $sql);
+//execute store procedure
+$sql = "EXEC sp_GetDataKompetisi";
 $stmt = sqlsrv_query($conn, $sql);
 
 if ($stmt === false) {
@@ -54,8 +57,12 @@ sqlsrv_free_stmt($stmt); // Free the statement
         <!-- Add super admin-specific content here -->
         <div class="dashboard-content">
             <h2>Mahasiswa Controls</h2>
+
+            <a href="profilMahasiswa.php" class="button">Lihat Profil Mahasiswa</a>
+
             <h4>Tambah Kompetisi</h4>
             <a href="tambahKompetisi.php" class="logout-btn">Tambah Kompetisi</a>
+            
             <!-- Add your super admin-specific features here -->
             <h2>List of Competitions</h2>
             <table>
@@ -71,12 +78,12 @@ sqlsrv_free_stmt($stmt); // Free the statement
                 <tbody>
                     <?php if (empty($kompetisiList)): ?>
                         <tr>
-                            <td colspan="4">Tidak ada kompetisi yang tersedia.</td>
+                            <td colspan="5">Tidak ada kompetisi yang tersedia.</td>
                         </tr>
                     <?php else: ?>
                         <?php foreach ($kompetisiList as $kompetisi): ?>
                             <tr>
-                                <td><?php echo htmlspecialchars($kompetisi['NamaMahasiswa']); ?></td>
+                                <td><?php echo htmlspecialchars($kompetisi['Nama']); ?></td>
                                 <td><?php echo htmlspecialchars($kompetisi['Judul']); ?></td>
                                 <td><?php echo htmlspecialchars($kompetisi['Deskripsi']); ?></td>
                                 <td><?php echo htmlspecialchars($kompetisi['Tingkat']); ?></td>

@@ -53,9 +53,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     sqlsrv_query($conn, $sql_context);
 
     // Query untuk menyimpan data ke tabel kompetisi
-    $sql = "INSERT INTO kompetisi (judul_kompetisi, deskripsi_kompetisi, instansi_penyelenggara, dosen_pembimbing, tgl_mulai, tgl_selesai, tingkat_kompetisi, peringkat, file_ide_karya, file_foto_dokumentasi, file_sertifikat, status_validasi) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Belum divalidasi')";
-    $params = array($judul_kompetisi, $deskripsi_kompetisi, $instansi_penyelenggara, $dosen_pembimbing, $tgl_mulai, $tgl_selesai, $tingkat_kompetisi, $peringkat, $file_ide_karya, $file_foto_dokumentasi, $file_sertifikat);
+    $sql = "INSERT INTO kompetisi (judul_kompetisi, deskripsi_kompetisi, instansi_penyelenggara, dosen_pembimbing, tgl_mulai, tgl_selesai, tingkat_kompetisi, peringkat, file_ide_karya, file_foto_dokumentasi, file_sertifikat, status_validasi, nim) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Belum divalidasi', ?)";
+    $params = array($judul_kompetisi, $deskripsi_kompetisi, $instansi_penyelenggara, $dosen_pembimbing, $tgl_mulai, $tgl_selesai, $tingkat_kompetisi, $peringkat, $file_ide_karya, $file_foto_dokumentasi, $file_sertifikat, $nim);
     $stmt = sqlsrv_query($conn, $sql, $params);
 
     if ($stmt === false) {
@@ -63,24 +63,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die(print_r(sqlsrv_errors(), true));
     }
 
-    // Ambil ID kompetisi terakhir yang baru ditambahkan
-    $sql_last_id = "SELECT SCOPE_IDENTITY() AS last_id";
-    $stmt_last_id = sqlsrv_query($conn, $sql_last_id);
-    if ($stmt_last_id === false) {
-        die(print_r(sqlsrv_errors(), true));
-    }
-    $row = sqlsrv_fetch_array($stmt_last_id, SQLSRV_FETCH_ASSOC);
-    $id_kompetisi = $row['last_id'];
+    // // Ambil ID kompetisi terakhir yang baru ditambahkan
+    // $sql_last_id = "SELECT SCOPE_IDENTITY() AS last_id";
+    // $stmt_last_id = sqlsrv_query($conn, $sql_last_id);
+    // if ($stmt_last_id === false) {
+    //     die(print_r(sqlsrv_errors(), true));
+    // }
+    // $row = sqlsrv_fetch_array($stmt_last_id, SQLSRV_FETCH_ASSOC);
+    // $id_kompetisi = $row['last_id'];
 
-    // // Insert data ke tabel list_kompetisi
-    $sql_list_kompetisi = "INSERT INTO list_kompetisi (id_kompetisi, nim) VALUES (?, ?)";
-    $params_list = array($id_kompetisi, $nim);
-    $stmt_list = sqlsrv_query($conn, $sql_list_kompetisi, $params_list);
+    // // // Insert data ke tabel list_kompetisi
+    // $sql_list_kompetisi = "INSERT INTO list_kompetisi (id_kompetisi, nim) VALUES (?, ?)";
+    // $params_list = array($id_kompetisi, $nim);
+    // $stmt_list = sqlsrv_query($conn, $sql_list_kompetisi, $params_list);
 
-    if ($stmt_list === false) {
-        // Handle error
-        die(print_r(sqlsrv_errors(), true));
-    }
+    // if ($stmt_list === false) {
+    //     // Handle error
+    //     die(print_r(sqlsrv_errors(), true));
+    // }
 
     // Redirect to dashboard after successful insertion
     header("Location: dashMhs.php");
