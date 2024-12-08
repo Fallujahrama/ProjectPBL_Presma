@@ -22,11 +22,8 @@ if ($stmt === false) {
 $mahasiswa = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 $namaMahasiswa = $mahasiswa ? $mahasiswa['nama_mhs'] : 'Nama tidak ditemukan';
 
-// Prepare and execute the query to get the list of competitions from the view
-// $sql = "SELECT NamaMahasiswa, Judul, Deskripsi, Tingkat, Peringkat FROM v_list_kompetisi";
-// $stmt = sqlsrv_query($conn, $sql);
 //execute store procedure
-$sql = "EXEC sp_GetDataKompetisi";
+$sql = "EXEC sp_GetDataKompetisiCoba";
 $stmt = sqlsrv_query($conn, $sql);
 
 if ($stmt === false) {

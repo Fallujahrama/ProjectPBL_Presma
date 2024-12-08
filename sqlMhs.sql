@@ -10,122 +10,7 @@ VALUES
 ('2341760005', '2341760005', 'Mahasiswa');
 
 
-CREATE OR ALTER VIEW v_list_kompetisi
-AS
-SELECT 
-    m.nama_mhs AS NamaMahasiswa,
-    k.judul_kompetisi AS Judul,
-    k.deskripsi_kompetisi AS Deskripsi,
-    k.tingkat_kompetisi AS Tingkat,
-    k.peringkat AS Peringkat
-FROM 
-    list_kompetisi lk
-JOIN 
-    kompetisi k ON lk.id_kompetisi = k.id_kompetisi
-JOIN 
-    mahasiswa m ON lk.nim = m.nim;
-
-
-select * from v_list_kompetisi;
-
-
-ALTER TABLE list_kompetisi
-ADD nim VARCHAR(15);
-
--- Tambahkan foreign key agar terhubung dengan tabel mahasiswa
-ALTER TABLE list_kompetisi
-ADD CONSTRAINT FK_list_kompetisi_nim FOREIGN KEY (nim) REFERENCES mahasiswa(nim);
-
---check constraint
-ALTER TABLE list_kompetisi NOCHECK CONSTRAINT FK_list_kompetisi_nim;
-
-
-UPDATE list_kompetisi
-SET nim = '2341760001'
-WHERE id_kompetisi = 1;
-
-UPDATE list_kompetisi
-SET nim = '2341760002'
-WHERE id_kompetisi = 2;
-
---trigger untuk menambahkan kompetisi
-CREATE TRIGGER trg_insert_kompetisi_to_list
-ON kompetisi
-AFTER INSERT
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    -- Mulai transaksi eksplisit
-    BEGIN TRY
-        BEGIN TRANSACTION;
-
-        -- Deklarasikan variabel untuk menyimpan NIM dari CONTEXT_INFO
-        DECLARE @nim VARCHAR(15);
-
-        -- Ambil NIM dari CONTEXT_INFO (dikirim oleh aplikasi)
-        SELECT @nim = CAST(CONTEXT_INFO() AS VARCHAR(15));
-
-        -- Pastikan NIM tidak kosong
-        IF @nim IS NULL OR @nim = ''
-        BEGIN
-            THROW 50000, 'NIM tidak ditemukan dalam konteks.', 1;
-        END
-
-        -- Masukkan data ke tabel list_kompetisi
-        INSERT INTO list_kompetisi (id_kompetisi, nim)
-        SELECT i.id_kompetisi, @nim
-        FROM inserted i;
-
-        -- Commit transaksi jika tidak ada masalah
-        COMMIT TRANSACTION;
-    END TRY
-    BEGIN CATCH
-        -- Rollback transaksi jika ada error
-        IF @@TRANCOUNT > 0
-            ROLLBACK TRANSACTION;
-
-        -- Kembalikan pesan error untuk debugging
-        DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
-        DECLARE @ErrorSeverity INT = ERROR_SEVERITY();
-        DECLARE @ErrorState INT = ERROR_STATE();
-        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
-    END CATCH;
-END;
-
-DISABLE TRIGGER trg_list_kompetisi_insert ON list_kompetisi;
-delete from kompetisi where id_kompetisi = 3;
-
-CREATE TRIGGER trg_insert_list_kompetisi
-ON kompetisi
-AFTER INSERT
-AS
-BEGIN
-    DECLARE @id_kompetisi INT;
-    DECLARE @nim VARCHAR(15);
-    
-    -- Mendapatkan id_kompetisi yang baru saja dimasukkan
-    SELECT @id_kompetisi = id_kompetisi FROM inserted;
-
-    -- Mendapatkan NIM mahasiswa dari CONTEXT_INFO
-    DECLARE @nim_from_context VARCHAR(15);
-    SET @nim_from_context = CAST(CONTEXT_INFO() AS VARCHAR(15));
-    
-    -- Memasukkan data ke tabel list_kompetisi
-    INSERT INTO list_kompetisi (id_kompetisi, nim)
-    VALUES (@id_kompetisi, @nim_from_context);
-BEGIN
-    -- Cek jika @id_kompetisi dan @nim_from_context memiliki nilai
-    IF @id_kompetisi IS NULL OR @nim_from_context IS NULL
-    BEGIN
-        RAISERROR('ID Kompetisi atau NIM dari CONTEXT_INFO tidak ditemukan.', 16, 1);
-    END
-END;
-
-END;
-
---store procedure--
-exec sp_GetDataKompetisi;
+--store procedure FIXEDDD--
 
 CREATE OR ALTER PROCEDURE sp_GetDataKompetisi
 AS
@@ -147,6 +32,9 @@ BEGIN
     ORDER BY 
         k.id_kompetisi DESC;
 END;
+
+exec sp_GetDataKompetisi;
+
 
 
 SELECT 
@@ -171,7 +59,8 @@ JOIN
     mahasiswa m ON m.nim = CAST(k.id_kompetisi AS VARCHAR(15));
 
  select * from list_kompetisi;
-EXEC sp_columns kompetisi;
+
+EXEC sp_columns kompetisiCo;
 
 select * from mahasiswa;
 
@@ -194,19 +83,16 @@ SELECT
 
 --rombak database
 -- Hapus constraint foreign key pada tabel list_kompetisi
-ALTER TABLE list_kompetisi DROP CONSTRAINT FK_list_kompetisi_nim;
+ALTER TABLE kompetisiCo DROP CONSTRAINT FK_kompetisiCo_nim
 ALTER TABLE list_kompetisi DROP CONSTRAINT FK_list_kompetisi_id_kompetisi;
 
 -- Tambahkan kolom nim ke tabel kompetisi
-ALTER TABLE kompetisi
-ADD nim VARCHAR(15);
+ALTER TABLE mahasiswa
+ALTER COLUMN nim VARCHAR(10);
 
 -- Tambahkan constraint foreign key pada kolom nim di tabel kompetisi
 ALTER TABLE kompetisi
 ADD CONSTRAINT FK_kompetisi_nim FOREIGN KEY (nim) REFERENCES mahasiswa(nim);
-
-
-ALTER TABLE kompetisi DROP CONSTRAINT FK_kompetisi_nim;
 
 
 select * from kompetisi;
@@ -217,8 +103,106 @@ UPDATE kompetisi
 SET nim = '2341760003'
 WHERE id_kompetisi = 7; -- Ganti sesuai ID yang relevan
 
---view profile mahasiswa
+--view profile mahasiswa FIXED--
 CREATE VIEW v_profilMahasiswa AS
 SELECT * FROM mahasiswa;
 
 select * from v_profilMahasiswa where nim = 2341760001;
+
+--store procedure insert--
+CREATE PROCEDURE sp_InsertKompetisi
+    @judul_kompetisi VARCHAR(200),
+    @deskripsi_kompetisi VARCHAR(MAX),
+    @instansi_penyelenggara VARCHAR(150),
+    @dosen_pembimbing VARCHAR(100),
+    @tgl_mulai DATE,
+    @tgl_selesai DATE,
+    @tingkat_kompetisi VARCHAR(50),
+    @peringkat VARCHAR(10),
+    @file_ide_karya VARCHAR(255),
+    @file_foto_dokumentasi VARCHAR(255),
+    @file_sertifikat VARCHAR(255),
+    @nim VARCHAR(15)
+AS
+BEGIN
+    INSERT INTO kompetisi (judul_kompetisi, deskripsi_kompetisi, instansi_penyelenggara, dosen_pembimbing, tgl_mulai, tgl_selesai, tingkat_kompetisi, peringkat, file_ide_karya, file_foto_dokumentasi, file_sertifikat, status_validasi, nim) 
+    VALUES (@judul_kompetisi, @deskripsi_kompetisi, @instansi_penyelenggara, @dosen_pembimbing, @tgl_mulai, @tgl_selesai, @tingkat_kompetisi, @peringkat, @file_ide_karya, @file_foto_dokumentasi, @file_sertifikat, 'Belum divalidasi', @nim);
+END;
+
+--debugging--
+
+select * from kompetisiCo;
+
+select 
+	nim, judul_kompetisi, deskripsi_kompetisi,
+	instansi_penyelenggara, dosen_pembimbing,
+	tingkat_kompetisi, peringkat, status_validasi
+from kompetisiCo;
+
+ CREATE TABLE kompetisiCo (
+  id_kompetisi INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+  nim VARCHAR(15),
+  judul_kompetisi VARCHAR(200) NULL,
+  deskripsi_kompetisi VARCHAR(MAX) NULL,
+  instansi_penyelenggara VARCHAR(150) NULL,
+  dosen_pembimbing VARCHAR(100) NULL,
+  tgl_mulai DATE NULL,
+  tgl_selesai DATE NULL,
+  tingkat_kompetisi VARCHAR(50) NULL,
+  peringkat VARCHAR(10) NULL,
+  file_ide_karya VARBINARY(MAX) NULL,
+  file_foto_dokumentasi VARBINARY(MAX) NULL,
+  file_sertifikat VARBINARY(MAX) NULL, 
+  status_validasi VARCHAR(20) CHECK (status_validasi IN ('Belum divalidasi', 'Valid', 'Tidak Valid')) NULL
+  CONSTRAINT FK_kompetisiCo_nim FOREIGN KEY (nim) REFERENCES mahasiswa(nim)
+);
+
+CREATE OR ALTER PROCEDURE sp_GetDataKompetisiCoba
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        m.nama_mhs AS Nama,
+        k.judul_kompetisi AS Judul,
+        k.deskripsi_kompetisi AS Deskripsi,
+        k.tingkat_kompetisi AS Tingkat,
+        k.peringkat AS Peringkat
+    FROM 
+        kompetisiCo k
+    INNER JOIN 
+        mahasiswa m ON k.nim = m.nim
+    WHERE 
+        k.status_validasi = 'Valid' -- Hanya ambil kompetisi yang valid
+    ORDER BY 
+        k.id_kompetisi DESC;
+END;
+
+exec sp_GetDataKompetisiCoba;
+
+CREATE PROCEDURE sp_InsertKompetisiCo
+	@nim VARCHAR(15),
+    @judul_kompetisi VARCHAR(200),
+    @deskripsi_kompetisi VARCHAR(MAX),
+    @instansi_penyelenggara VARCHAR(150),
+    @dosen_pembimbing VARCHAR(100),
+    @tgl_mulai DATE,
+    @tgl_selesai DATE,
+    @tingkat_kompetisi VARCHAR(50),
+    @peringkat VARCHAR(10),
+    @file_ide_karya VARCHAR(MAX),
+    @file_foto_dokumentasi VARCHAR(MAX),
+    @file_sertifikat VARCHAR(MAX)
+AS
+BEGIN
+	DECLARE @file_ide_karya_bin VARBINARY(MAX);
+	DECLARE @file_foto_dokumentasi_bin VARBINARY(MAX);
+	DECLARE @file_sertifikat_bin VARBINARY(MAX);
+
+	SET @file_ide_karya_bin = CAST('' AS XML).value('xs:base64Binary(sql:variable("@file_ide_karya"))', 'VARBINARY(MAX)');
+	SET @file_foto_dokumentasi_bin = CAST('' AS XML).value('xs:base64Binary(sql:variable("@file_foto_dokumentasi"))', 'VARBINARY(MAX)');
+    SET @file_sertifikat_bin = CAST('' AS XML).value('xs:base64Binary(sql:variable("@file_sertifikat"))', 'VARBINARY(MAX)');
+
+    INSERT INTO kompetisiCo (nim, judul_kompetisi, deskripsi_kompetisi, instansi_penyelenggara, dosen_pembimbing, tgl_mulai, tgl_selesai, tingkat_kompetisi, peringkat, file_ide_karya, file_foto_dokumentasi, file_sertifikat, status_validasi) 
+    VALUES (@nim, @judul_kompetisi, @deskripsi_kompetisi, @instansi_penyelenggara, @dosen_pembimbing, @tgl_mulai, @tgl_selesai, @tingkat_kompetisi, @peringkat, @file_ide_karya_bin, @file_foto_dokumentasi_bin, @file_sertifikat_bin, 'Belum divalidasi');
+END;

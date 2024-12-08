@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $status = $_POST["status"];
 
     // Update the status in the database
-    $sql = "UPDATE kompetisi SET status_validasi = ? WHERE id_kompetisi = ?";
+    $sql = "UPDATE kompetisiCo SET status_validasi = ? WHERE id_kompetisi = ?";
     $params = [$status, $id];
     $stmt = sqlsrv_query($conn, $sql, $params);
 
