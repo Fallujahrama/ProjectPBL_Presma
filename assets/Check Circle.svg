@@ -1,0 +1,6 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Check Circle" opacity="0.7">
+<path id="tone" d="M175 100C175 141.421 141.421 175 100 175C58.5786 175 25 141.421 25 100C25 58.5786 58.5786 25 100 25C141.421 25 175 58.5786 175 100Z" fill="white" fill-opacity="0.2"/>
+<path id="shape" d="M141.667 75L83.3332 133.333L58.3328 108.333M175 100C175 141.421 141.421 175 100 175C58.5786 175 25 141.421 25 100C25 58.5786 58.5786 25 100 25C141.421 25 175 58.5786 175 100Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>
