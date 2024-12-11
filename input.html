@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="globals.css">
+    <link rel="stylesheet" href="input.css">
+    <title>Input Data Prestasi</title>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar Start -->
+        <div class="sidebar">
+            <div class="header">
+              <div class="main-content">
+                <div id="menu-button">
+                  <input type="checkbox" id="menu-checkbox">
+                  <label for="menu-checkbox" id="menu-label">
+                    <div id="hamburger"></div>
+                  </label>
+                </div>
+              </div>
+                <div class="list-item">
+                </div>
+                <div class="illustration">
+                  <a href="#">
+                    <img src="Logo1.png" alt="" class="icon">
+                    <span class="description-header">Mahasiswa</span>
+                  </a>
+                </div>
+              </div>
+                <div class="main">
+                  <div class="list-item">
+                    <a href="#">
+                      <img src="assets/User.svg" alt="" class="icon">
+                      <span class="description">Account</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="main">
+                  <div class="list-item">
+                    <a href="dashboard_supadmin.php">
+                      <img src="assets/Dashboard Circle.svg" alt="" class="icon">
+                      <span class="description">Dashboard</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="main">
+                  <div class="list-item">
+                    <a href="#" class="active">
+                      <img src="assets/Collaborations Idea.svg" alt="" class="icon">
+                      <span class="description">Input Prestasi</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="main">
+                  <div class="list-item">
+                    <a href="#">
+                      <img src="assets/Book.svg" alt="" class="icon">
+                      <span class="description">Data Prestasi</span>
+                    </a>
+                  </div>
+                </div>
+          </div>
+          <!-- Sidebar End -->
+
+          <!-- Main Content Start -->
+          <div class="label">
+              <!-- Teks di luar kotak -->
+              <div class="container-mapres">
+                <img src="assets/Medal Star.svg" alt="">
+                <h3>Prestasi Mahasiswa</h3>
+            </div>
+            <br>
+      
+              <!-- Kotak -->
+              <div class="box">
+                  <div class="rectangle">
+                      <div class="datakom">
+                          <div class="text-wrappers">Data Kompetisi</div>
+      
+                          <!-- Form Fields -->
+                          <div class="form-group">
+                              <label for="program-studi">Program Studi <span>*</span></label>
+                              <input type="text" id="program-studi" name="program-studi" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="jenis-kompetisi">Jenis Kompetisi <span>*</span></label>
+                              <input type="text" id="jenis-kompetisi" name="jenis-kompetisi" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="tingkat-kompetisi">Tingkat Kompetisi <span>*</span></label>
+                              <input type="text" id="tingkat-kompetisi" name="tingkat-kompetisi" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="judul-kompetisi">Judul Kompetisi <span>*</span></label>
+                              <input type="text" id="judul-kompetisi" name="judul-kompetisi" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="judul-kompetisi-en">Judul Kompetisi (English) <span>*</span></label>
+                              <input type="text" id="judul-kompetisi-en" name="judul-kompetisi-en" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="tempat-kompetisi">Tempat Kompetisi <span>*</span></label>
+                              <input type="text" id="tempat-kompetisi" name="tempat-kompetisi" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="tempat-kompetisi-en">Tempat Kompetisi (English) <span>*</span></label>
+                              <input type="text" id="tempat-kompetisi-en" name="tempat-kompetisi-en" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="url-kompetisi">URL Kompetisi <span>*</span></label>
+                              <input type="url" id="url-kompetisi" name="url-kompetisi" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="tanggal-mulai">Tanggal Mulai <span>*</span></label>
+                              <input type="date" id="tanggal-mulai" name="tanggal-mulai" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="tanggal-akhir">Tanggal Akhir <span>*</span></label>
+                              <input type="date" id="tanggal-akhir" name="tanggal-akhir" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="jumlah-pt">Jumlah PT (Berpartisipasi) <span>*</span></label>
+                              <input type="number" id="jumlah-pt" name="jumlah-pt" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="jumlah-peserta">Jumlah Peserta <span>*</span></label>
+                              <input type="number" id="jumlah-peserta" name="jumlah-peserta" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="no-surat-tugas">No Surat Tugas <span>*</span></label>
+                              <input type="text" id="no-surat-tugas" name="no-surat-tugas" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="tanggal-surat-tugas">Tanggal Surat Tugas <span>*</span></label>
+                              <input type="date" id="tanggal-surat-tugas" name="tanggal-surat-tugas" required>
+                          </div>
+                          <div class="form-groups">
+                              <label for="file-surat-tugas">File Surat Tugas <span>*</span></label>
+                              <input class="gambar1" type="file" id="file-surat-tugas" name="file-surat-tugas" accept=".jpg,.jpeg,.png" onchange="previewImage(this, 'preview-surat-tugas')" required>
+                              <small>Ukuran (Max: 5000Kb)</small>
+                              <img id="preview-surat-tugas" class="preview-img" src="#" alt="Pratinjau Gambar" style="display: none;">
+                          </div>
+                          <div class="form-groups">
+                              <label for="file-sertifikat">File Sertifikat <span>*</span></label>
+                              <input class="gambar1" type="file" id="file-sertifikat" name="file-sertifikat" accept=".jpg,.jpeg,.png" onchange="previewImage(this, 'preview-sertifikat')" required>
+                              <small>Ukuran (Max: 5000Kb)</small>
+                              <img id="preview-sertifikat" class="preview-img" src="#" alt="Pratinjau Gambar" style="display: none;">
+                          </div>
+                          <div class="form-groups">
+                              <label for="foto-kegiatan">Foto Kegiatan <span>*</span></label>
+                              <input class="gambar1" type="file" id="foto-kegiatan" name="foto-kegiatan" accept=".jpg,.jpeg,.png" onchange="previewImage(this, 'preview-foto-kegiatan')" required>
+                              <small>Ukuran (Max: 5000Kb)</small>
+                              <img id="preview-foto-kegiatan" class="preview-img" src="#" alt="Pratinjau Gambar" style="display: none;">
+                          </div>
+                          <div class="form-groups">
+                              <label for="file-poster">File Poster <span>*</span></label>
+                              <input class="gambar1" type="file" id="file-poster" name="file-poster" accept=".jpg,.jpeg,.png" onchange="previewImage(this, 'preview-poster')" required>
+                              <small>Ukuran (Max: 5000Kb)</small>
+                              <img id="preview-poster" class="preview-img" src="#" alt="Pratinjau Gambar" style="display: none;">
+                          </div>
+      
+                          <div class="section">
+                              <div class="section-header">
+                                  📚 Data Mahasiswa
+                              </div>
+                              <div class="table">
+                                  <div class="table-header">
+                                      <div class="table-cell">NO</div>
+                                      <div class="table-cell">Mahasiswa</div>
+                                      <div class="table-cell">Peran</div>
+                                      <div class="table-cell">Hapus</div>
+                                  </div>
+                                  <div class="table-row">
+                                      <div class="table-cell">1</div>
+                                      <div class="table-cell">
+                                          <select>
+                                              <option>Pilih Mahasiswa</option>
+                                              <option>Mahasiswa 1</option>
+                                              <option>Mahasiswa 2</option>
+                                          </select>
+                                      </div>
+                                      <div class="table-cell">
+                                          <select>
+                                              <option>Pilih Peran</option>
+                                              <option>Ketua</option>
+                                              <option>Anggota</option>
+                                          </select>
+                                      </div>
+                                      <div class="table-cell">
+                                          <button class="delete-button">×</button>
+                                      </div>
+                                  </div>
+                              </div>
+                              <button class="add-button">+ Tambah Mahasiswa</button>
+                          </div>
+      
+                          <!-- Data Pembimbing Section -->
+                          <div class="section">
+                              <div class="section-header">
+                                  📚 Data Pembimbing
+                              </div>
+                              <div class="table">
+                                  <div class="table-header">
+                                      <div class="table-cell">NO</div>
+                                      <div class="table-cell">Pembimbing</div>
+                                      <div class="table-cell">Peran Pembimbing</div>
+                                      <div class="table-cell">Hapus</div>
+                                  </div>
+                                  <div class="table-row">
+                                      <div class="table-cell">1</div>
+                                      <div class="table-cell">
+                                          <select>
+                                              <option>Pilih Dosen</option>
+                                              <option>Dosen 1</option>
+                                              <option>Dosen 2</option>
+                                          </select>
+                                      </div>
+                                      <div class="table-cell">
+                                          <select>
+                                              <option>Pilih Peran</option>
+                                              <option>Ketua</option>
+                                              <option>Pendamping</option>
+                                          </select>
+                                      </div>
+                                      <div class="table-cell">
+                                          <button class="delete-button">×</button>
+                                      </div>
+                                  </div>
+                              </div>
+                              <button class="add-button">+ Tambah Pembimbing</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <script src="inputimg.js"></script>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js" integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="scriptadmin.js"></script>
+</body>
+
+</html>
