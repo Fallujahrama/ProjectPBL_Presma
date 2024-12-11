@@ -397,6 +397,24 @@ h3{
     border-radius: 5px;
     border: 1px solid #ccc;
 }
+.form-group select {
+    width: 57%;
+    /* Menyesuaikan ukuran input */
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: white;
+}
+.form-group textarea {
+    width: 56.7%;
+    /* Menyesuaikan ukuran input */
+    padding: auto;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: white;
+}
 
 input[type="text"],
 input[type="url"],
