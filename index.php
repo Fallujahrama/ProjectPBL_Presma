@@ -1,53 +1,5 @@
 <?php
-session_start();
-include('db_connect.php');
-$message = "";
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    var_dump($_POST);
-    $username = trim($_POST["username"]);
-    $password = trim($_POST["password"]);
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        var_dump($_POST);
-        $username = trim($_POST["username"]);
-        $password = trim($_POST["password"]);
-    
-        if (!empty($username) && !empty($password)) {
-            // Query untuk memeriksa keberadaan username dan password di database
-            $query = "SELECT * FROM userid WHERE username = ? AND password = ?";
-            $params = array($username, $password);
-            $stmt = sqlsrv_query($conn, $query, $params); // Menggunakan sqlsrv_query
-    
-            if ($stmt) {
-                if (sqlsrv_has_rows($stmt)) {
-                    $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
-                    $_SESSION['id_user'] = $row['id_user'];
-                    $_SESSION['username'] = $row['username'];
-                    $_SESSION['role'] = $row['role'];
-    
-                    // Redirect berdasarkan role
-                    if ($row['role'] === 'Super Admin') {
-                        header("Location: dashSupAdm.php");
-                    } else if ($row['role'] === 'Admin') {
-                        header("Location: dashAdm.php");
-                    } else if ($row['role'] === 'Mahasiswa') {
-                        header("Location: dashMhs.php");
-                    } else {
-                        $message = "Invalid role assignment!";
-                    }
-                    exit();
-                } else {
-                    $message = "Invalid username or password!";
-                }
-            } else {
-                $message = "Error executing query!";
-            }
-        } else {
-            $message = "Please enter username and password!";
-        }
-    }
-}
+include('loginBack.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -88,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         .logs {
             max-width: 400px;
-            margin-top: -100px;
+            margin-top: -12%;
             padding: 10px;
             background-color: transparent;
             border-radius: 25px;
@@ -99,6 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             position: absolute;
             right: 140px;
         }
+        
         .container {
             display: flex;
             justify-content: flex-end;
@@ -123,6 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             flex-direction: column; /* Arrange children in a column */
             align-items: center; /* Center items horizontally */
             width: 100%; /* Ensure it takes full width */
+            margin-left: 15%;
         }
         input {
             width: 150%; /* Ensure input fields take full width */
