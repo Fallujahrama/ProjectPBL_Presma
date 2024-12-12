@@ -1,7 +1,15 @@
 <?php
-// session_start();
 include 'db_connect.php';
-include 'dashMhs.php';
+include 'MahasiswaBackend.php';
+
+$backend = new MahasiswaBackend($conn);
+
+$namaMahasiswa = $backend->getNamaMahasiswa();
+$kompetisiList = $backend->getKompetisiList();
+$valid_count = $backend->getCountValid();
+$belumvalid_count = $backend->getCountBelumValid();
+$tidakvalid_count = $backend->getCountTidakValid();
+
 
 // // Check if user is logged in and has supadmin role
 // if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'Mahasiswa') {
@@ -42,7 +50,7 @@ include 'dashMhs.php';
             </div>
               <div class="main">
                 <div class="list-item">
-                  <a href="profilMahasiswa.php">
+                  <a href="profileMhs.php">
                     <img src="assets/User.svg" alt="" class="icon">
                     <span class="description">Account</span>
                   </a>
@@ -50,7 +58,7 @@ include 'dashMhs.php';
               </div>
               <div class="main">
                 <div class="list-item">
-                  <a href="#" class="active">
+                  <a href="Mahasiswa.php" class="active">
                     <img src="assets/Dashboard Circle.svg" alt="" class="icon">
                     <span class="description">Dashboard</span>
                   </a>
@@ -58,7 +66,7 @@ include 'dashMhs.php';
               </div>
               <div class="main">
                 <div class="list-item">
-                  <a href="tambahKompetisi.php">
+                  <a href="inputKompetisi.php">
                     <img src="assets/Collaborations Idea.svg" alt="" class="icon">
                     <span class="description">Input Kompetisi</span>
                   </a>
