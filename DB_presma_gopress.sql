@@ -334,3 +334,234 @@ VALUES
 
 COMMIT TRANSACTION;
 
+
+---------------------------------------------------------------------------------------------------------------------------------------
+/* PROGRAMABILITY BACKEND */
+---------------------------------------------------------------------------------------------------------------------------------------
+
+--/* Store Procedure : inputan mahasiswa ke admin untuk validasi */--
+
+CREATE OR ALTER PROCEDURE sp_GetDataKompetisi
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        m.nama_mhs AS Nama,
+        k.judul_kompetisi AS Judul,
+        k.deskripsi_kompetisi AS Deskripsi,
+        k.tingkat_kompetisi AS Tingkat,
+        k.peringkat AS Peringkat
+    FROM 
+        tb_kompetisi k
+    INNER JOIN 
+        tb_mahasiswa m ON k.nim = m.nim
+    WHERE 
+        k.status_validasi = 'Valid' -- Hanya ambil kompetisi yang valid
+    ORDER BY 
+        k.id_kompetisi DESC;
+END;
+
+exec sp_GetDataKompetisi;
+
+DROP PROCEDURE sp_GetDataKompetisi;
+
+--/* View : profile mahasiswa */--
+
+CREATE VIEW v_profilMahasiswa AS
+SELECT * FROM tb_mahasiswa;
+
+--/* View : profile admin */--
+
+CREATE VIEW v_profilAdmin AS
+SELECT * FROM tb_admin;
+
+--/* Store Procedure : mahasiswa berprestasi secara akademik */--
+
+CREATE PROCEDURE sp_get_mahasiswa_berprestasi
+    @limit INT -- Parameter jumlah mahasiswa yang ingin ditampilkan
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT TOP (@limit)
+        nim,
+        nama_mhs,
+        kelas,
+        prodi,
+        TotalIPK
+    FROM tb_prestasi
+    ORDER BY TotalIPK DESC;
+END;
+
+EXEC sp_get_mahasiswa_berprestasi @limit = 10;
+EXEC sp_help tb_prestasi;
+
+--/* Store Procedure : input kompetisi mahasiswa */--
+
+CREATE PROCEDURE sp_InsertKompetisi
+	@nim VARCHAR(15),
+    @judul_kompetisi VARCHAR(200),
+    @deskripsi_kompetisi VARCHAR(MAX),
+    @instansi_penyelenggara VARCHAR(150),
+    @dosen_pembimbing VARCHAR(100),
+    @tgl_mulai DATE,
+    @tgl_selesai DATE,
+    @tingkat_kompetisi VARCHAR(50),
+    @peringkat VARCHAR(10),
+    @file_ide_karya VARCHAR(MAX),
+    @file_foto_dokumentasi VARCHAR(MAX),
+    @file_sertifikat VARCHAR(MAX)
+AS
+BEGIN
+	DECLARE @file_ide_karya_bin VARBINARY(MAX);
+	DECLARE @file_foto_dokumentasi_bin VARBINARY(MAX);
+	DECLARE @file_sertifikat_bin VARBINARY(MAX);
+
+	SET @file_ide_karya_bin = CAST('' AS XML).value('xs:base64Binary(sql:variable("@file_ide_karya"))', 'VARBINARY(MAX)');
+	SET @file_foto_dokumentasi_bin = CAST('' AS XML).value('xs:base64Binary(sql:variable("@file_foto_dokumentasi"))', 'VARBINARY(MAX)');
+    SET @file_sertifikat_bin = CAST('' AS XML).value('xs:base64Binary(sql:variable("@file_sertifikat"))', 'VARBINARY(MAX)');
+
+    INSERT INTO kompetisi (nim, judul_kompetisi, deskripsi_kompetisi, instansi_penyelenggara, dosen_pembimbing, tgl_mulai, tgl_selesai, tingkat_kompetisi, peringkat, file_ide_karya, file_foto_dokumentasi, file_sertifikat, status_validasi) 
+    VALUES (@nim, @judul_kompetisi, @deskripsi_kompetisi, @instansi_penyelenggara, @dosen_pembimbing, @tgl_mulai, @tgl_selesai, @tingkat_kompetisi, @peringkat, @file_ide_karya_bin, @file_foto_dokumentasi_bin, @file_sertifikat_bin, 'Belum divalidasi');
+END;
+
+CREATE OR ALTER PROCEDURE sp_GetDataKompetisi
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+		k.id_kompetisi AS Id,
+        m.nama_mhs AS Nama,
+        k.judul_kompetisi AS Judul,
+        k.deskripsi_kompetisi AS Deskripsi,
+        k.tingkat_kompetisi AS Tingkat,
+        k.peringkat AS Peringkat
+    FROM 
+        kompetisi k
+    INNER JOIN 
+        mahasiswa m ON k.nim = m.nim
+    WHERE 
+        k.status_validasi = 'Valid' -- Hanya ambil kompetisi yang valid
+    ORDER BY 
+        k.id_kompetisi DESC;
+END;
+
+--/* Store Procedure : Filter mahasiswa dengan ipk tertinggi untuk Mahasiswa Berprestasi Akademik */--
+
+CREATE OR ALTER PROCEDURE sp_get_avg_nilai_by_nim
+    @nim NVARCHAR(20) -- Parameter untuk NIM
+AS
+BEGIN
+    SELECT 
+        nim,
+        AVG(nilai) AS RataRataNilai
+    FROM 
+        tb_nilai_mahasiswa
+    WHERE 
+        nim = @nim
+    GROUP BY 
+        nim;
+END;
+GO
+
+EXEC sp_get_avg_nilai_by_nim @nim = '2341760009';
+
+CREATE OR ALTER PROCEDURE sp_get_top_student_per_class
+AS
+BEGIN
+    -- Ambil NIM dengan nilai rata-rata tertinggi di setiap kelas
+    WITH RankedStudents AS (
+        SELECT 
+            m.kelas,
+            m.nim,
+            m.nama_mhs AS nama,  -- Menggunakan nama_mhs dari tabel tb_mahasiswa
+            AVG(n.nilai) AS IPK,
+            RANK() OVER (PARTITION BY m.kelas ORDER BY AVG(n.nilai) DESC) AS RankInClass
+        FROM 
+            tb_nilai_mahasiswa n
+        INNER JOIN 
+            tb_mahasiswa m ON n.nim = m.nim
+        GROUP BY 
+            m.kelas, m.nim, m.nama_mhs
+    )
+    SELECT 
+        kelas,
+        nim,
+        nama,
+        IPK
+    FROM 
+        RankedStudents
+    WHERE 
+        RankInClass = 1; -- Pilih mahasiswa dengan IPK tertinggi di setiap kelas
+END;
+GO
+
+EXEC sp_get_top_student_per_class;
+
+--/* Trigger : validasi kompetisi tanggal mulai tidak boleh lebih besar dari tanggal selesai */--
+
+CREATE TRIGGER trg_check_tanggal_kompetisi
+ON tb_kompetisi
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT 1 
+        FROM inserted 
+        WHERE tgl_selesai < tgl_mulai
+    )
+    BEGIN
+        PRINT 'Tanggal selesai kompetisi tidak boleh lebih awal dari tanggal mulai. Operasi dibatalkan.';
+        ROLLBACK TRANSACTION;
+    END
+END;
+GO
+
+--/* Trigger : melindungi data kompetisi tidak bisa dihapus apabila statusnya "Valid" */--
+
+CREATE TRIGGER trg_no_delete_valid_kompetisi
+ON tb_kompetisi
+INSTEAD OF DELETE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT 1 
+        FROM tb_kompetisi 
+        WHERE status_validasi = 'Valid'
+    )
+    BEGIN
+        PRINT 'Kompetisi dengan status Valid tidak boleh dihapus. Operasi dibatalkan.';
+        ROLLBACK TRANSACTION;
+    END
+    ELSE
+    BEGIN
+        DELETE FROM tb_kompetisi
+        WHERE id_kompetisi IN (SELECT id_kompetisi FROM DELETED);
+    END
+END;
+GO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
