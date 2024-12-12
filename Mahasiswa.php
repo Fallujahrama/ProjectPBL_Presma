@@ -10,13 +10,6 @@ $valid_count = $backend->getCountValid();
 $belumvalid_count = $backend->getCountBelumValid();
 $tidakvalid_count = $backend->getCountTidakValid();
 
-
-// // Check if user is logged in and has supadmin role
-// if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'Mahasiswa') {
-//   header("Location: loginPage.php");
-//   exit();
-// }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

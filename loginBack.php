@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!empty($username) && !empty($password)) {
         // Query untuk memeriksa keberadaan username dan password di database
-        $query = "SELECT * FROM userid WHERE username = ? AND password = ?";
+        $query = "SELECT * FROM tb_userid WHERE username = ? AND password = ?";
         $params = array($username, $password);
         $stmt = sqlsrv_query($conn, $query, $params); // Menggunakan sqlsrv_query
 
