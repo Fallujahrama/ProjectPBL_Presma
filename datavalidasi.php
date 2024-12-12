@@ -24,7 +24,7 @@
                 <div class="illustration">
                   <a href="#">
                     <img src="Logo1.png" alt="" class="icon">
-                    <span class="description-header">Admin</span>
+                    <span class="description-header">Super Admin</span>
                   </a>
                 </div>
               </div>
