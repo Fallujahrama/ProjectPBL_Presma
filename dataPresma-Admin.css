@@ -3,6 +3,21 @@
     margin: 0;
 }
 
+head {
+    font-style: montserrat;
+}
+
+.list-item a.active .icon .description{
+    margin-top: 100px;
+    font-style: montserrat;
+    font-weight: bold;
+    }
+
+.content .headerdua{
+    font-style: montserrat;
+    font-weight: bold;
+}
+
 body{
     font-family: 'Ubuntu', sans-serif;
     width: 100vw;
@@ -28,6 +43,7 @@ body{
     flex-direction: column;
     transition: all ease-in-out .5s;
     overflow-x:hidden;
+    margin-left: -210px;
 }
 
 .sidebar.hide{
@@ -391,13 +407,20 @@ table tbody td {
     opacity: 1;
 }
 
-.modal-footer .btn btn-secondary:hover {
+.modal-footer .btn btn-secondary {
     background-color: red;
     border-radius: 50%;
     color: white;
     border: 1px solid #ccc;
     opacity: 100%;
 }
+
+.btn-custom {
+    background-color: red;
+    border-color: red;
+    color: white;
+}
+
 
 /* Warna Nama Kolom */
 .table thead th {
