@@ -1,3 +1,18 @@
+<?php
+include 'db_connect.php';
+include 'SuperBackend.php';
+
+$backend = new SuperBackend($conn);
+
+$kompetisiValidasi = [];
+$kompetisiValidasi = $backend->validasiData();
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $id = $_POST["id"];
+  $status = $_POST["status"];
+
+  $updateStatus = $backend->updateStatus($id, $status);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +53,7 @@
                 </div>
                 <div class="main">
                   <div class="list-item">
-                    <a href="#">
+                    <a href="SuperAdmin.php">
                       <img src="assets/Dashboard Circle.svg" alt="" class="icon">
                       <span class="description">Dashboard</span>
                     </a>
@@ -92,48 +107,32 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>2341760001</td>
-                    <td>coba debug</td>
-                    <td>trial</td>
-                    <td>debug</td>
-                    <td>nyoba debug</td>
-                    <td>Nasional</td>
-                    <td>Coba Debug</td>
-                    <td><a href="viewFile.php?type=sertifikat&nim=<?php echo urlencode($competition['nim']); ?>" class="btn-preview" target="_blank">Lihat Sertifikat</a></td>
-                    <td><a href="viewFile.php?type=ide_karya&nim=<?php echo urlencode($competition['nim']); ?>" class="btn-preview" target="_blank">Lihat Ide Karya</a></td>
-                    <td><a href="viewFile.php?type=foto_dokumentasi&nim=<?php echo urlencode($competition['nim']); ?>" class="btn-preview" target="_blank">Lihat Foto Dokumentasi</a></td>
-                    <td>
-                        <select class="form-select form-select-sm d-inline-block w-auto">
-                            <option value="valid">.....</option>
-                            <option value="valid">Valid</option>
-                            <option value="invalid">Invalid</option>
-                        </select>
-                        <button class="btn btn-success btn-sm">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>2341760003</td>
-                    <td>GEMASTIK XVI</td>
-                    <td>GEMASTIK XVI</td>
-                    <td>Kemendikbud</td>
-                    <td>Pak Bagas</td>
-                    <td>Regional</td>
-                    <td>Juara 3</td>
-                    <td><a href="viewFile.php?type=sertifikat&nim=<?php echo urlencode($competition['nim']); ?>" class="btn-preview" target="_blank">Lihat Sertifikat</a></td>
-                    <td><a href="viewFile.php?type=ide_karya&nim=<?php echo urlencode($competition['nim']); ?>" class="btn-preview" target="_blank">Lihat Ide Karya</a></td>
-                    <td><a href="viewFile.php?type=foto_dokumentasi&nim=<?php echo urlencode($competition['nim']); ?>" class="btn-preview" target="_blank">Lihat Foto Dokumentasi</a></td>
-                    <td>
-                        <select class="form-select form-select-sm d-inline-block w-auto">
-                            <option value="valid">.....</option>
-                            <option value="valid">Valid</option>
-                            <option value="invalid">Invalid</option>
-                        </select>
-                        <button class="btn btn-success btn-sm">Update</button>
-                    </td>
-                </tr>
+                <?php foreach ($kompetisiValidasi as $validasi): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($validasi['id_kompetisi']); ?></td>
+                            <td><?php echo htmlspecialchars($validasi['nim']); ?></td>
+                            <td><?php echo htmlspecialchars($validasi['judul_kompetisi']); ?></td>
+                            <td><?php echo htmlspecialchars($validasi['deskripsi_kompetisi']); ?></td>
+                            <td><?php echo htmlspecialchars($validasi['instansi_penyelenggara']); ?></td>
+                            <td><?php echo htmlspecialchars($validasi['dosen_pembimbing']); ?></td>
+                            <td><?php echo htmlspecialchars($validasi['tingkat_kompetisi']); ?></td>
+                            <td><?php echo htmlspecialchars($validasi['peringkat']); ?></td>
+                            <td><a href="viewFile.php?type=ide_karya&nim=<?php echo urlencode($validasi['nim']); ?>" class="btn-preview" target="_blank">Lihat Ide Karya</a></td>
+                            <td><a href="viewFile.php?type=foto_dokumentasi&nim=<?php echo urlencode($validasi['nim']); ?>" class="btn-preview" target="_blank">Lihat Foto Dokumentasi</a></td>
+                            <td><a href="viewFile.php?type=sertifikat&nim=<?php echo urlencode($validasi['nim']); ?>" class="btn-preview" target="_blank">Lihat Sertifikat</a></td>
+                            <td>
+                                <form method="POST" action="datavalidasi.php">
+                                <select class="form-select form-select-sm d-inline-block w-auto" name="status">
+                                    <option value="Belum divalidasi">.....</option>
+                                    <option value="Valid" <?php echo $validasi['status_validasi'] === 'Valid' ? 'selected' : ''; ?>>Valid</option>
+                                    <option value="Tidak Valid" <?php echo $validasi['status_validasi'] === 'Tidak Valid' ? 'selected' : ''; ?>>Tidak Valid</option>
+                                </select>
+                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($validasi['id_kompetisi']); ?>"> 
+                                <button class="btn btn-success btn-sm">Update</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
             </tbody>
         </table>
     </div>
