@@ -364,19 +364,19 @@ h2{
 
 .content .headerdua .icon2sup{
     margin-left: 96%;
-    margin-top: -32px;
+    margin-top: -32px;  
     display: flex;
 }
 
 .content .headerdua .icon1{
-    margin-left: 135%;
+    margin-left: 94%;
     margin-top: -35px;
     display: flex;
 }
 
 .content .headerdua .icon2{
-    margin-left: 142%;
-    margin-top: -31px;
+    margin-left: 96%;
+    margin-top: -32px;
     display: flex;
 }
 
@@ -387,7 +387,7 @@ h2{
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
-    margin-left: 50%;
+    margin-left: 37%;
     margin-top: -290px;
     position: sticky;
     display:grid;

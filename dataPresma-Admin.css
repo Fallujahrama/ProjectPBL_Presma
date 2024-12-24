@@ -13,7 +13,7 @@ body{
 }
 .container{
     display:flex;
-    grid-template-columns: 18rem auto 2rem;
+    grid-template-columns: 14rem auto 14rem;
     gap: 1.8rem;
     min-height: 100vh;
     margin: 0 auto;
