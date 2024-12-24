@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   <div class="list-item">
                     <a href="profileMhs.php">
                       <img src="assets/User.svg" alt="" class="icon">
-                      <span class="description">Account</span>
+                      <span class="description">Profile</span>
                     </a>
                   </div>
                 </div>

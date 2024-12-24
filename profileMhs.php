@@ -40,7 +40,7 @@ $row = $backend->getProfileMhs();
               <div class="list-item">
                 <a href="profileMhs.php" class="active">
                   <img src="assets/User.svg" alt="" class="icon">
-                  <span class="description">Account</span>
+                  <span class="description">Profile</span>
                 </a>
               </div>
             </div>

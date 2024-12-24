@@ -553,3 +553,52 @@ select {
     border: 1px solid #ccc;
     border-radius: 8px;
 }
+
+/* Styling untuk tombol Preview */
+.preview-btn {
+    background-color: #4caf50; /* Warna hijau */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px; /* Jarak antara tombol */
+}
+
+.preview-btn:hover {
+    background-color: #388e3c; /* Warna hijau lebih gelap saat hover */
+}
+
+/* Styling untuk tombol Tambah Kompetisi */
+.tambahKompetisi {
+    background-color: #2196F3; /* Warna biru */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 19px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px; /* Jarak antara tombol */
+    margin-left: 82%;
+}
+
+.tambahKompetisi:hover {
+    background-color: #1976D2; /* Warna biru lebih gelap saat hover */
+}
+
+/* Styling untuk tombol Kembali ke Dashboard */
+.backDash {
+    background-color: #f44336; /* Warna merah */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.backDash:hover {
+    background-color: #d32f2f; /* Warna merah lebih gelap saat hover */
+}

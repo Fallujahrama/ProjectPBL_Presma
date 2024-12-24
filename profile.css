@@ -361,7 +361,7 @@ h2{
 }
 
 .dashboard-link:hover, .logout-link:hover {
-    text-decoration: underline; 
+    text-decoration: none; 
     opacity: 0.9; 
 }
 
@@ -370,4 +370,5 @@ h2{
     display: flex;
     justify-content: space-between; /* Membuat tombol saling berjauhan */
     align-items: center;
+    text-decoration: none;
 }

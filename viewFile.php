@@ -6,7 +6,7 @@ if (isset($_GET['type']) && isset($_GET['nim'])) {
     $nim = $_GET['nim'];
 
     // Ambil data file dari database berdasarkan NIM
-    $sql = "SELECT file_ide_karya, file_foto_dokumentasi, file_sertifikat FROM kompetisiCo WHERE nim = ?";
+    $sql = "SELECT file_ide_karya, file_foto_dokumentasi, file_sertifikat FROM tb_kompetisi WHERE nim = ?";
     $params = array($nim);
     $stmt = sqlsrv_query($conn, $sql, $params);
 

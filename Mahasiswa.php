@@ -45,7 +45,7 @@ $tidakvalid_count = $backend->getCountTidakValid();
                 <div class="list-item">
                   <a href="profileMhs.php">
                     <img src="assets/User.svg" alt="" class="icon">
-                    <span class="description">Account</span>
+                    <span class="description">Profile</span>
                   </a>
                 </div>
               </div>
@@ -237,46 +237,6 @@ $tidakvalid_count = $backend->getCountTidakValid();
                         </tr>
                       <?php endforeach; ?>
                     <?php endif; ?>
-                      <!-- <tr>
-                          <td>01</td>
-                          <td>Christine Brooks</td>
-                          <td>Judul</td>
-                          <td>2024</td>
-                          <td>Electric</td>
-                          <td><span class="status">Nasional</span></td>
-                      </tr>
-                      <tr>
-                          <td>02</td>
-                          <td>Christine Brooks</td>
-                          <td>Judul</td>
-                          <td>2024</td>
-                          <td>Electric</td>
-                          <td><span class="status">Nasional</span></td>
-                      </tr>
-                      <tr>
-                          <td>03</td>
-                          <td>Christine Brooks</td>
-                          <td>Judul</td>
-                          <td>2024</td>
-                          <td>Electric</td>
-                          <td><span class="status">Nasional</span></td>
-                      </tr>
-                      <tr>
-                          <td>04</td>
-                          <td>Christine Brooks</td>
-                          <td>Judul</td>
-                          <td>2024</td>
-                          <td>Electric</td>
-                          <td><span class="status">Nasional</span></td>
-                      </tr>
-                      <tr>
-                          <td>05</td>
-                          <td>Christine Brooks</td>
-                          <td>Judul</td>
-                          <td>2024</td>
-                          <td>Electric</td>
-                          <td><span class="status">Nasional</span></td>
-                      </tr> -->
                   </tbody>
               </table>
           </div><br><br>
