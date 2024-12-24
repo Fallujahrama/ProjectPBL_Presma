@@ -1,10 +1,20 @@
+<?php
+include 'db_connect.php';
+include 'AdminBackend.php';
+
+$backend = new AdminBackend($conn);
+
+$dataKomp = [];
+$dataKomp = $backend->datakompetisi();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="datavalidasi.css">
+    <title>Info Kompetisi</title>
+    <link rel="stylesheet" href="datakompetisi.css">
 </head>
 <body>
     <div class="container">
@@ -30,15 +40,15 @@
               </div>
                 <div class="main">
                   <div class="list-item">
-                    <a href="#">
+                    <a href="profileAdmin.php">
                       <img src="assets/User.svg" alt="" class="icon">
-                      <span class="description">Account</span>
+                      <span class="description">Profile</span>
                     </a>
                   </div>
                 </div>
                 <div class="main">
                   <div class="list-item">
-                    <a href="#">
+                    <a href="Admin.php">
                       <img src="assets/Dashboard Circle.svg" alt="" class="icon">
                       <span class="description">Dashboard</span>
                     </a>
@@ -46,15 +56,15 @@
                 </div>
                 <div class="main">
                   <div class="list-item">
-                    <a href="#" class="active">
+                    <a href="datakompetisi.php" class="active">
                       <img src="assets/Collaborations Idea.svg" alt="" class="icon">
-                      <span class="description">Validasi</span>
+                      <span class="description">Info Kompetisi</span>
                     </a>
                   </div>
                 </div>
                 <div class="main">
                   <div class="list-item">
-                    <a href="#">
+                    <a href="dataPresma-admin.php">
                       <img src="assets/Book.svg" alt="" class="icon">
                       <span class="description">Data Prestasi</span>
                     </a>
@@ -66,14 +76,14 @@
           <!-- Main Start -->
            <div class="content">
            <div class="headerdua">
-                <h2>Validasi</h2>
+                <h2>Kompetisi</h2>
                 <div class="icon1">
                     <a href="#">
                         <img src="assets/Icons-drawer.svg" alt="" class="icon">
                     </a>
                 </div>
             </div><br>
-
+          <div class="table-container"></div>
             <table class="table table-bordered text-center align-middle table-hover">
             <thead class="table-primary">
                 <tr>
@@ -91,33 +101,21 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>2341760001</td>
-                    <td>coba debug</td>
-                    <td>trial</td>
-                    <td>debug</td>
-                    <td>nyoba debug</td>
-                    <td>Nasional</td>
-                    <td>Coba Debug</td>
-                    <td><a href="viewFile.php?type=sertifikat&nim=<?php echo urlencode($competition['nim']); ?>" class="btn-preview" target="_blank">Lihat Sertifikat</a></td>
-                    <td><a href="viewFile.php?type=ide_karya&nim=<?php echo urlencode($competition['nim']); ?>" class="btn-preview" target="_blank">Lihat Ide Karya</a></td>
-                    <td><a href="viewFile.php?type=foto_dokumentasi&nim=<?php echo urlencode($competition['nim']); ?>" class="btn-preview" target="_blank">Lihat Foto Dokumentasi</a></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>2341760003</td>
-                    <td>GEMASTIK XVI</td>
-                    <td>GEMASTIK XVI</td>
-                    <td>Kemendikbud</td>
-                    <td>Pak Bagas</td>
-                    <td>Regional</td>
-                    <td>Juara 3</td>
-                    <td><a href="viewFile.php?type=sertifikat&nim=<?php echo urlencode($competition['nim']); ?>" class="btn-preview" target="_blank">Lihat Sertifikat</a></td>
-                    <td><a href="viewFile.php?type=ide_karya&nim=<?php echo urlencode($competition['nim']); ?>" class="btn-preview" target="_blank">Lihat Ide Karya</a></td>
-                    <td><a href="viewFile.php?type=foto_dokumentasi&nim=<?php echo urlencode($competition['nim']); ?>" class="btn-preview" target="_blank">Lihat Foto Dokumentasi</a></td>
-                   
-                </tr>
+                <?php foreach ($dataKomp as $validasi): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($validasi['id_kompetisi']); ?></td>
+                            <td><?php echo htmlspecialchars($validasi['nim']); ?></td>
+                            <td><?php echo htmlspecialchars($validasi['judul_kompetisi']); ?></td>
+                            <td><?php echo htmlspecialchars($validasi['deskripsi_kompetisi']); ?></td>
+                            <td><?php echo htmlspecialchars($validasi['instansi_penyelenggara']); ?></td>
+                            <td><?php echo htmlspecialchars($validasi['dosen_pembimbing']); ?></td>
+                            <td><?php echo htmlspecialchars($validasi['tingkat_kompetisi']); ?></td>
+                            <td><?php echo htmlspecialchars($validasi['peringkat']); ?></td>
+                            <td><a href="viewFile.php?type=ide_karya&nim=<?php echo urlencode($validasi['nim']); ?>" class="btn-preview" target="_blank">Lihat Ide Karya</a></td>
+                            <td><a href="viewFile.php?type=foto_dokumentasi&nim=<?php echo urlencode($validasi['nim']); ?>" class="btn-preview" target="_blank">Lihat Foto Dokumentasi</a></td>
+                            <td><a href="viewFile.php?type=sertifikat&nim=<?php echo urlencode($validasi['nim']); ?>" class="btn-preview" target="_blank">Lihat Sertifikat</a></td>
+                        </tr>
+                    <?php endforeach; ?>
             </tbody>
         </table>
     </div>
