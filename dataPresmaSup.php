@@ -32,15 +32,15 @@
               </div>
                 <div class="main">
                   <div class="list-item">
-                    <a href="#">
+                    <a href="profileSupAdm.php">
                       <img src="assets/User.svg" alt="" class="icon">
-                      <span class="description">Account</span>
+                      <span class="description">Profile</span>
                     </a>
                   </div>
                 </div>
                 <div class="main">
                   <div class="list-item">
-                    <a href="dashboard_supadmin.php">
+                    <a href="SuperAdmin.php">
                       <img src="assets/Dashboard Circle.svg" alt="" class="icon">
                       <span class="description">Dashboard</span>
                     </a>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="main">
                   <div class="list-item">
-                    <a href="input.html">
+                    <a href="datavalidasi.php">
                       <img src="assets/Collaborations Idea.svg" alt="" class="icon">
                       <span class="description">Input Prestasi</span>
                     </a>

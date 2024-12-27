@@ -162,7 +162,7 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    SELECT 
+    SELECT
         m.nama_mhs AS Nama,
         k.judul_kompetisi AS Judul,
         k.deskripsi_kompetisi AS Deskripsi,

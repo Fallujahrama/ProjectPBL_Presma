@@ -45,9 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               </div>
                 <div class="main">
                   <div class="list-item">
-                    <a href="#">
+                    <a href="profileSupAdm.php">
                       <img src="assets/User.svg" alt="" class="icon">
-                      <span class="description">Account</span>
+                      <span class="description">Profile</span>
                     </a>
                   </div>
                 </div>
@@ -61,15 +61,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="main">
                   <div class="list-item">
-                    <a href="#" class="active">
+                    <a href="datavalidasi.php" class="active">
                       <img src="assets/Collaborations Idea.svg" alt="" class="icon">
-                      <span class="description">Validasi</span>
+                      <span class="description">Validasi Kompetisi</span>
                     </a>
                   </div>
                 </div>
                 <div class="main">
                   <div class="list-item">
-                    <a href="#">
+                    <a href="dataPresmaSup.php">
                       <img src="assets/Book.svg" alt="" class="icon">
                       <span class="description">Data Prestasi</span>
                     </a>
@@ -88,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </a>
                 </div>
             </div><br>
-
+          <div class="table-container">
             <table class="table table-bordered text-center align-middle table-hover">
             <thead class="table-primary">
                 <tr>
@@ -133,8 +133,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </td>
                         </tr>
                     <?php endforeach; ?>
-            </tbody>
-        </table>
+                </tbody>
+              </table>
+          </div>
     </div>
 </div>
            <!-- Main End -->

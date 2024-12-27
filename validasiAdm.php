@@ -1,12 +1,6 @@
 <?php
 session_start();
 
-// // Check if user is logged in and has admin role
-// if (!isset($_SESSION['username']) || $_SESSION['role'] !=='Super Admin') {
-//     header("Location: index.php");
-//     exit();
-// }
-
 include 'db_connect.php';
 
 // Fetch all competitions
@@ -15,7 +9,7 @@ $sql = "SELECT
             id_kompetisi, nim, judul_kompetisi, deskripsi_kompetisi,
             instansi_penyelenggara, dosen_pembimbing,
             tingkat_kompetisi, peringkat, status_validasi
-        FROM kompetisiCo";
+        FROM tb_kompetisi";
 $stmt = sqlsrv_query($conn, $sql);
 
 if ($stmt === false) {
