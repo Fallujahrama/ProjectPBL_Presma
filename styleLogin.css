@@ -1,0 +1,119 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background-color: #505b6c;
+    /* background-image: url(asset/backgroundImage.jpg); */
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Left Side Styling */
+.left-side {
+    flex: 1;
+    background-color: #2f95d1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.welcome-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.welcome-header h1 {
+    font-size: 2rem;
+    color: #1a6fe6;
+}
+
+.star-logo {
+    width: 50px;
+}
+
+.welcome-image {
+    width: 100%;
+    max-width: 500px; /* Adjusted for better scaling */
+}
+
+/* Right Side Styling */
+.right-side {
+    flex-basis: 40%;
+    padding: 3rem; /* Increased padding for better spacing */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px; /* Adjusted for better form size */
+}
+
+.logo {
+    width: 120px; /* Adjusted logo size */
+}
+
+.title {
+    color: #1d3557;
+    margin-bottom: 0.5rem;
+    font-size: 1.8rem; /* Increased font size */
+}
+
+.subtitle {
+    color: #457b9d;
+}
+
+/* Input Group Styling */
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-icon {
+    position: relative;
+}
+
+.icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.input-group input {
+    width: 100%;
+    padding-left: 40px; /* Adjusted padding for icon space */
+}
+
+/* Button Styling */
+.login-btn {
+    width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+   .container {
+       flex-direction: column-reverse; /* Stack left side below right side */
+   }
+
+   .left-side, .right-side {
+       padding-left: 1rem; 
+       padding-right: 1rem; 
+   }
+
+   .welcome-image {
+       max-width: none; /* Allow image to scale fully on smaller screens */
+   }
+}

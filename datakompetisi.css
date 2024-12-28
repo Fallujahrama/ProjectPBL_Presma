@@ -12,23 +12,22 @@ body{
     overflow-x:scroll;
 }
 .container{
-    display:flex;
-    grid-template-columns: 20rem auto 4rem;
+    display: flex;
+    grid-template-columns: 14rem auto 14rem;
     gap: 1.8rem;
     min-height: 100vh;
-    margin: 0 auto;
+    margin: auto;
 }
 
 .sidebar{
     background-color: #8ECAE6;
-    width: 269.5px;
+    width: 260px;
     padding: 24px;
     display:flex;
     box-sizing: border-box;
     flex-direction: column;
     transition: all ease-in-out .5s;
     overflow-x:hidden;
-    margin-left: -10%;
 }
 
 .sidebar.hide{
@@ -53,7 +52,7 @@ body{
     line-height: 16px;
     text-align: center;
     color: #FFF;
-    margin-left: 5px;
+    margin-left: 3px;
 }
 
 .sidebar.hide .description-header{
@@ -280,8 +279,10 @@ body{
     }
 }
 
-/* Content */
-h9{
+
+/* content */
+
+h2{
     color: #023047;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 40px;
@@ -293,142 +294,107 @@ h9{
 }
 
 .content .headerdua .icon1{
-    margin-left: 260%;
+    margin-left: 94%;
     margin-top: -35px;
     display: flex;
 }
-.label {
-    width: 100%;
-    text-align: center;
-    margin: 20px 0;
-}
-
-.label .text-wrapper {
-    font-size: 36px;
-    font-weight: bold;
-    color: #023047;
-}
-
-.box {
-    width: 270%;
-    overflow-x: auto;
-    margin-bottom: 10%;
-}
-
-.box .bg {
-    background-color: #8ecae6;
-    border-radius: 15px;
-    border: 0.6px solid #d1d1d1;
-}
 
 table {
-    width: 100%;
+    width: 94%; /* Pastikan tabel memenuhi lebar kontainer */
     border-collapse: collapse;
-    margin-top: 10px;
-}
-
-table thead {
-    background-color: #8ecae6;
-    color: white;
-}
-
-table thead th {
-    padding: 15px;
-    text-align: left;
-    font-size: 16px;
-}
-
-table tbody tr {
+    text-align: center;
+    border-radius: 8px;
+    font-size: 12px;
     background-color: #ffffff;
-    border-bottom: 1px solid #ddd;
+    position: relative;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-table tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
+.table-container {
+    max-height: 600px; /* Sesuaikan tinggi maksimum sesuai kebutuhan */
+    max-width: 1200px;
+    overflow-y: auto; /* Scroll vertikal aktif */
+    overflow-x: auto; /* Aktifkan scroll vertikal */
+    border: 1px solid #ddd; /* Tambahkan border opsional */
+  }
+  
+  .table-container thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #173A62;
+    color: #fff;
+    border-bottom: 2px solid #dee2e6;
+  }
+
+thead {
+    background-color: #173A62;
+    color: #fff;
 }
 
-table tbody td {
-    padding: 15px;
+thead th {
+    padding: 8px;
     font-size: 14px;
-}
-
-.status {
-    color: #008000;
     font-weight: bold;
+    border: 1px solid #c4d4e0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.download-semua{
-    margin-left: 84%;
-    margin-top: 10px;
+tbody tr {
+    border: 1px solid #c4d4e0;
 }
 
-.download-semua .download{
-    margin-left: 29%;
+tbody tr:nth-child(odd) {
+    background-color: #d9eaff;
 }
 
-.box .bg .lihat{
+tbody tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+tbody td {
+    padding: 12px;
+    border: 1px solid #c4d4e0;
+}
+
+
+/* Button Styles */
+
+.btn-preview {
     background-color: #ffcc00;
     border: none;
     color: #000;
-    padding: 8px 20px;
+    padding: 6px 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 14px;
+    font-size: 12px;
     border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.3s;
-    font-weight: bold;
-
+    font-weight: bold;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-/* Animasi Pop-Up */
-.modal.fade .modal-dialog {
-    transform: translateY(-50px);
-    opacity: 0;
-    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-}
-.modal.show .modal-dialog {
-    transform: translateY(0);
-    opacity: 1;
+.btn-preview:hover {
+    background-color: #e6b800;
 }
 
-.modal-footer .btn btn-secondary {
-    background-color: red;
-    border-radius: 50%;
-    color: white;
-    border: 1px solid #ccc;
-    opacity: 100%;
-}
-.modal-footer .btn btn-secondary:hover {
-    background-color: red;
-    border-radius: 50%;
-    color: white;
-    border: 1px solid #ccc;
-    opacity: 100%;
+
+/* Form Select Styles */
+
+select.form-select {
+    border-radius: 8px;
+    border: 1px solid #c4d4e0;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-/* Warna Nama Kolom */
-.table thead th {
-    background-color: #8ecae6;
-    color: white;
-    text-align: center;
-    border: #023047;
-    outline-color: #8ECAE6;
-}
-
-/* Gaya Tabel */
-.table {
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
-    overflow: hidden;
-}
-.table th, .table td {
-    vertical-align: middle;
-    text-align: center;
-}
-
-/* Hover Effect pada Baris Tabel */
-.table tbody tr:hover {
-    background-color: #b40101;
+button.btn-success {
+    margin-left: 8px;
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
