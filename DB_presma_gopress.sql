@@ -98,6 +98,16 @@ CREATE TABLE tb_prestasi (
 );
 GO
 
+-- Tabel: notifikasi
+CREATE TABLE tb_notifikasi (
+	id_notifikasi INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+	id_kompetisi INT NOT NULL,
+	pesan NVARCHAR(255),
+	tanggal DATETIME DEFAULT GETDATE()
+);
+
+INSERT INTO tb_notifikasi (id_kompetisi, pesan) VALUES (1, 'Contoh pesan notifikasi');
+
 ---------------------------------------------------------------------------------------------------------------------------------------
 /* ISI DATA DUMMY */
 ---------------------------------------------------------------------------------------------------------------------------------------
@@ -105,9 +115,21 @@ BEGIN TRANSACTION;
 -- Data hak akses
 INSERT into tb_userid (username, password, role) 
 VALUES 
-('admin', 'admin123', 'Admin'),
-('superadmin', 'super123', 'Super Admin'),
-('2341760001', '2341760001', 'Mahasiswa');
+('199501102024051002', '199501102024051002', 'Admin'),
+('199501102024051003', '199501102024051003', 'Admin'),
+('199501102024051001', '199501102024051001', 'Super Admin'),
+('2341760001', '2341760001', 'Mahasiswa'),
+('2341760002', '2341760002', 'Mahasiswa'),
+('2341760003', '2341760003', 'Mahasiswa'),
+('2341760004', '2341760004', 'Mahasiswa'),
+('2341760005', '2341760005', 'Mahasiswa'),
+('2341760006', '2341760006', 'Mahasiswa'),
+('2341760007', '2341760007', 'Mahasiswa'),
+('2341760008', '2341760008', 'Mahasiswa'),
+('2341760009', '2341760009', 'Mahasiswa'),
+('2341760010', '2341760010', 'Mahasiswa'),
+('2341760011', '2341760011', 'Mahasiswa'),
+('2341760012', '2341760012', 'Mahasiswa');
 GO
 SELECT * FROM tb_userid;
 
@@ -145,11 +167,6 @@ VALUES
 SELECT * FROM tb_mata_kuliah;
 
 -- Tabel kompetisi (isi sendiri aja dulu)
-
--- Tabel list_kompetisi (isi sendiri aja dulu)
-
-
-SELECT * from list_kompetisi;
 
 -- Tabel tb_nilai_mahasiswa
 INSERT INTO tb_nilai_mahasiswa (nilai, alpa, izin, sakit, nim, id_matkul)
@@ -246,6 +263,19 @@ SELECT --- HITUNG ABSENSI MAHASISWA
 FROM tb_nilai_mahasiswa
 GROUP BY nim;
 
+SELECT 
+	m.nama_mhs, m.nim, 
+	SUM(n.nilai) AS total_nilai, 
+	COUNT(n.id_matkul) AS total_matkul,
+	SUM(n.sakit) AS total_sakit,
+	SUM(n.izin) AS total_izin,
+	SUM(n.alpa) AS total_alpa
+FROM tb_mahasiswa m 
+LEFT JOIN tb_nilai_mahasiswa n ON m.nim = n.nim 
+WHERE m.kelas = 'TI-1A'
+GROUP BY m.nama_mhs, m.nim;
+
+SELECT DISTINCT m.kelas, m.prodi FROM tb_mahasiswa m;
 
 -- Tabel prestasi
 INSERT INTO tb_prestasi (nim)
@@ -422,11 +452,11 @@ BEGIN
 	SET @file_foto_dokumentasi_bin = CAST('' AS XML).value('xs:base64Binary(sql:variable("@file_foto_dokumentasi"))', 'VARBINARY(MAX)');
     SET @file_sertifikat_bin = CAST('' AS XML).value('xs:base64Binary(sql:variable("@file_sertifikat"))', 'VARBINARY(MAX)');
 
-    INSERT INTO kompetisi (nim, judul_kompetisi, deskripsi_kompetisi, instansi_penyelenggara, dosen_pembimbing, tgl_mulai, tgl_selesai, tingkat_kompetisi, peringkat, file_ide_karya, file_foto_dokumentasi, file_sertifikat, status_validasi) 
+    INSERT INTO tb_kompetisi (nim, judul_kompetisi, deskripsi_kompetisi, instansi_penyelenggara, dosen_pembimbing, tgl_mulai, tgl_selesai, tingkat_kompetisi, peringkat, file_ide_karya, file_foto_dokumentasi, file_sertifikat, status_validasi) 
     VALUES (@nim, @judul_kompetisi, @deskripsi_kompetisi, @instansi_penyelenggara, @dosen_pembimbing, @tgl_mulai, @tgl_selesai, @tingkat_kompetisi, @peringkat, @file_ide_karya_bin, @file_foto_dokumentasi_bin, @file_sertifikat_bin, 'Belum divalidasi');
 END;
 
-CREATE OR ALTER PROCEDURE sp_GetDataKompetisi
+--CREATE OR ALTER PROCEDURE sp_GetDataKompetisi
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -544,7 +574,33 @@ END;
 GO
 
 
+-- Function 
+CREATE FUNCTION func_GetNotifikasi()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT n.pesan, n.tanggal, k.nim 
+    FROM tb_notifikasi n 
+    JOIN tb_kompetisi k ON n.id_kompetisi = k.id_kompetisi; 
+);
 
+--SP data prestasi
+CREATE PROCEDURE sp_GetDataPrestasiMahasiswa
+    @Kelas VARCHAR(50)
+AS
+BEGIN
+    SELECT m.nama_mhs, m.nim, 
+           SUM(n.nilai) AS total_nilai, 
+           COUNT(n.id_matkul) AS total_matkul,
+           SUM(n.sakit) AS total_sakit,
+           SUM(n.izin) AS total_izin,
+           SUM(n.alpa) AS total_alpa
+    FROM tb_mahasiswa m 
+    LEFT JOIN tb_nilai_mahasiswa n ON m.nim = n.nim 
+    WHERE m.kelas = @Kelas
+    GROUP BY m.nama_mhs, m.nim
+END
 
 
 
