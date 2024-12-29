@@ -74,5 +74,16 @@ class MahasiswaBackend {
         $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
         return $row;
     }
+
+     public function getNotifikasi() {
+        $sql = "SELECT * FROM func_GetNotifikasi()
+                ORDER BY tanggal DESC";
+        $stmt = sqlsrv_query($this->conn, $sql);
+        $notifikasiList = [];
+        while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+            $notifikasiList[] = $row;
+        }
+        return $notifikasiList;
+    }
 }
 ?>

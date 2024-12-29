@@ -4,11 +4,19 @@ include 'MahasiswaBackend.php';
 
 $backend = new MahasiswaBackend($conn);
 
+// Cek jika permintaan AJAX untuk mendapatkan notifikasi
+if (isset($_GET['action']) && $_GET['action'] == 'getNotifikasi') {
+    $notifikasiList = $backend->getNotifikasi(); // Panggil fungsi untuk mendapatkan notifikasi
+    echo json_encode($notifikasiList); // Kembalikan notifikasi dalam format JSON
+    exit(); // Hentikan eksekusi lebih lanjut
+}
+
 $namaMahasiswa = $backend->getNamaMahasiswa();
 $kompetisiList = $backend->getKompetisiList();
 $valid_count = $backend->getCountValid();
 $belumvalid_count = $backend->getCountBelumValid();
 $tidakvalid_count = $backend->getCountTidakValid();
+$notifikasiList = $backend->getNotifikasi();
 
 ?>
 <!DOCTYPE html>
@@ -80,9 +88,19 @@ $tidakvalid_count = $backend->getCountTidakValid();
           <div class="content">
             <div class="headerdua">
                 <h2>Hi! <?php echo htmlspecialchars($namaMahasiswa); ?></h2>
-                <div class="icon1">
+                <!-- Pop-Up Notifikasi -->
+                <div id="notifikasiPopup" class="notifikasi-popup">
+                    <div class="notifikasi-content">
+                        <span class="close" onclick="closeNotifikasi()">&times;</span>
+                        <p>Notifikasi Pembaruan Status Kompetisi</p>
+                        <div id="notifikasiList">
+                            <!-- Notifikasi akan dimasukkan di sini melalui JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                <div class="icon1" onclick="showNotifikasi()">
                     <a href="#">
-                        <img src="assets/Icons-drawer.svg" alt="" class="icon">
+                        <img src="assets/Icons-drawer.svg" alt="Notifikasi" class="icon">
                     </a>
                 </div>
                 <div class="icon2">
@@ -245,5 +263,36 @@ $tidakvalid_count = $backend->getCountTidakValid();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js" integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="my_chart.js"></script>
     <script src="scriptadmin.js"></script>
+    <script>
+      function showNotifikasi() {
+          document.getElementById("notifikasiPopup").style.display = "block";
+          loadNotifikasi(); // Panggil fungsi untuk memuat notifikasi
+      }
+
+      function closeNotifikasi() {
+          document.getElementById("notifikasiPopup").style.display = "none";
+      }
+
+      // Ambil notifikasi dari backend dan tampilkan
+      function loadNotifikasi() {
+          fetch('Mahasiswa.php?action=getNotifikasi') // Panggil endpoint yang baru ditambahkan
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('Network response was not ok');
+                  }
+                  return response.json(); // Mengonversi respons ke JSON
+              })
+              .then(data => {
+                  const notifikasiList = document.getElementById("notifikasiList");
+                  notifikasiList.innerHTML = ''; // Kosongkan daftar notifikasi
+                  data.forEach(notifikasi => {
+                      const div = document.createElement("div");
+                      div.textContent = `${notifikasi.tanggal}: ${notifikasi.pesan}`; // Tampilkan pesan notifikasi
+                      notifikasiList.appendChild(div);
+                  });
+              })
+              .catch(error => console.error('Error fetching notifikasi:', error));
+      }
+    </script>
 </body>
 </html>
