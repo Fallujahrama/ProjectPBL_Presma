@@ -11,6 +11,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $status = $_POST["status"];
 
   $updateStatus = $backend->updateStatus($id, $status);
+  
+  if ($status === 'Valid') {
+    $pesan = "Status kompetisi dengan ID $id_kompetisi telah diperbarui menjadi 'Valid'.";
+    $notif = $backend->tambahNotifikasi($id_kompetisi, $pesan); // Panggil fungsi untuk menambahkan notifikasi
+}
 }
 ?>
 <!DOCTYPE html>
@@ -69,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="main">
                   <div class="list-item">
-                    <a href="dataPresmaSup.php">
+                    <a href="dataPresma-super.php">
                       <img src="assets/Book.svg" alt="" class="icon">
                       <span class="description">Data Prestasi</span>
                     </a>

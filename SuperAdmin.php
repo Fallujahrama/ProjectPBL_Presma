@@ -68,7 +68,7 @@ $kompetisiList = $backend->getKompetisiList();
                 </div>
                 <div class="main">
                   <div class="list-item">
-                    <a href="dataPresmaSup.php">
+                    <a href="dataPresma-super.php">
                       <img src="assets/Book.svg" alt="" class="icon">
                       <span class="description">Data Prestasi</span>
                     </a>
