@@ -85,16 +85,6 @@ $tidakvalid_count = $backend->getCountTidakValid();
                         <img src="assets/Icons-drawer.svg" alt="" class="icon">
                     </a>
                 </div>
-                <div class="icon2">
-                    <a href="#">
-                        <img src="assets/Icons-drawer(1).svg" alt="" class="icon">
-                    </a>
-                </div>
-                <div class="icon3">
-                    <a href="#">
-                        <img src="assets/Mail.svg" alt="" class="icon">
-                    </a>
-                </div>
             </div>
 
             <!-- Status Unggah Prestasi -->
