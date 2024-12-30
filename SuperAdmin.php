@@ -86,11 +86,6 @@ $kompetisiList = $backend->getKompetisiList();
                         <img src="assets/Icons-drawer.svg" alt="" class="icon">
                     </a>
                 </div>
-                <div class="icon2sup">
-                    <a href="#">
-                        <img src="assets/Icons-drawer(1).svg" alt="" class="icon">
-                    </a>
-                </div>
             </div>
 
             <!-- Aktivitas -->
